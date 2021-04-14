@@ -55,3 +55,19 @@ void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
         board[k][l] = '*';
     }
 }
+
+void fBells(int x, int y, char **board)
+{
+    int i,j;
+
+    for(i = 0;i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            if(board[i][j] == '*')
+            {
+                if()
+            }
+        }
+    }
+}
