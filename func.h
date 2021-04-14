@@ -98,7 +98,7 @@ void printBoard(int x, int y, char **board, int **checkBoard)
         {
             if(checkBoard[i][j] =)
             {
-
+                
             }
         }
     }

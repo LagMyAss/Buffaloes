@@ -40,35 +40,29 @@ int main()
     scanf("%d", &dif);
 
     char **board;
+    int **checkBoard;
     
     // Alocate dynamicly memory for the table board
     board = (char **) malloc (y * sizeof(char *));
+    checkBoard = (int **) malloc (y * sizeof(int *));
 
-    for(i = 0; i < y; i++)
+    for(i = 0; i < x; i++)
     {
         board[i] = (char *) malloc (x * sizeof(char));
+        checkBoard[i] = (int *) malloc (x * sizeof(int));
     }
 
     // if memory cannot be allocated
-    if(board == NULL)                     
+    if(board == NULL || checkBoard == NULL)                     
     {
         printf("Error! memory not allocated.");
         exit(0);
     }
 
-    fStart(x, y, board);
+    fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board);
     fBells(x, y, board);
 
-    // Print table for test
-    for(i = 0; i < x;i++)
-    {
-        for(j = 0;j < y;j++)
-        {
-            printf("%c ", board[i][j]);
-        }
-        printf("\n");
-    }
     
 
     // free memory
