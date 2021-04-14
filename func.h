@@ -58,15 +58,29 @@ void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
 
 void fBells(int x, int y, char **board)
 {
-    int i,j;
+    int i,j,count,k,l;
 
     for(i = 0;i < x;i++)
     {
         for(j = 0;j < y;j++)
         {
-            if(board[i][j] == '*')
+            count = 0;
+            if(board[i][j] != '*')
             {
-                if()
+                for(k = i - 1;k <= i + 1;k++)
+                {
+                    for(l = j - 1;l <= j + 1;l++)
+                    {
+                        if((k >= 0 && k < x) && (l >= 0 && l < y))
+                        {
+                            if(board[k][l] == '*')
+                            {
+                                count++;
+                            }
+                        }
+                    }
+                }
+                board[i][j] = count + '0';
             }
         }
     }

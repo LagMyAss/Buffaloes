@@ -58,6 +58,7 @@ int main()
 
     fStart(x, y, board);
     fBuffalo(x, y, dif, board);
+    fBells(x, y, board);
 
     // Print table test
     for(i = 0; i < x;i++)
