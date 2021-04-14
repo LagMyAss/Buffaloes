@@ -80,7 +80,7 @@ void fBells(int x, int y, char **board)
                         }
                     }
                 }
-                board[i][j] = count + '0';
+                board[i][j] += count;
             }
         }
     }

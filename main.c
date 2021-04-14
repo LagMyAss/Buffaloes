@@ -60,7 +60,7 @@ int main()
     fBuffalo(x, y, dif, board);
     fBells(x, y, board);
 
-    // Print table test
+    // Print table for test
     for(i = 0; i < x;i++)
     {
         for(j = 0;j < y;j++)
