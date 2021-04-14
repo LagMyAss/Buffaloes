@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void fStart(int x, int y, char **board) // initializing every element with 0
+void fStart(int x, int y, char **board, int **checkBoard) // initializing every element with 0
 {
     int i, j;
 
@@ -11,8 +11,10 @@ void fStart(int x, int y, char **board) // initializing every element with 0
         for(j = 0;j < y;j++)
         {
             board[i][j] = '0';
+            checkBoard[i][j] = 0;
         }
     }
+
 }
 
 void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
@@ -81,6 +83,22 @@ void fBells(int x, int y, char **board)
                     }
                 }
                 board[i][j] += count;
+            }
+        }
+    }
+}
+
+void printBoard(int x, int y, char **board, int **checkBoard)
+{
+    int i,j;
+
+    for(i = 0;i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            if(checkBoard[i][j] =)
+            {
+
             }
         }
     }
