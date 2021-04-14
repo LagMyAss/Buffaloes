@@ -43,13 +43,13 @@ int main()
     int **checkBoard;
     
     // Alocate dynamicly memory for the table board
-    board = (char **) malloc (y * sizeof(char *));
-    checkBoard = (int **) malloc (y * sizeof(int *));
+    board = (char **) malloc (x * sizeof(char *));
+    checkBoard = (int **) malloc (x * sizeof(int *));
 
     for(i = 0; i < x; i++)
     {
-        board[i] = (char *) malloc (x * sizeof(char));
-        checkBoard[i] = (int *) malloc (x * sizeof(int));
+        board[i] = (char *) malloc (y * sizeof(char));
+        checkBoard[i] = (int *) malloc (y * sizeof(int));
     }
 
     // if memory cannot be allocated
@@ -64,7 +64,7 @@ int main()
     fBells(x, y, board);
     printBoard(x, y, board, checkBoard);
 
-    /* Print table test
+    printf("\n");
     for(i = 0; i < x;i++)
     {
         for(j = 0;j < y;j++)
@@ -72,7 +72,7 @@ int main()
             printf("%c ", board[i][j]);
         }
         printf("\n");
-    }*/
+    }
 
     // free memory
     for(i = 0; i < y; i++)
