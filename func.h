@@ -53,8 +53,8 @@ void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
         {
             k = rand() % x;
             l = rand() % y;
-        }while(board[k][l] == '*');
-        board[k][l] = '*';
+        }while(board[k][l] == '@');
+        board[k][l] = '@';
     }
 }
 
@@ -67,7 +67,7 @@ void fBells(int x, int y, char **board)
         for(j = 0;j < y;j++)
         {
             count = 0;
-            if(board[i][j] != '*')
+            if(board[i][j] != '@')
             {
                 for(k = i - 1;k <= i + 1;k++)
                 {
@@ -75,7 +75,7 @@ void fBells(int x, int y, char **board)
                     {
                         if((k >= 0 && k < x) && (l >= 0 && l < y))
                         {
-                            if(board[k][l] == '*')
+                            if(board[k][l] == '@')
                             {
                                 count++;
                             }
@@ -83,6 +83,10 @@ void fBells(int x, int y, char **board)
                     }
                 }
                 board[i][j] += count;
+                if(board[i][j]=='0')
+                {
+                    board[i][j]='.';
+                }
             }
         }
     }
@@ -90,16 +94,42 @@ void fBells(int x, int y, char **board)
 
 void printBoard(int x, int y, char **board, int **checkBoard)
 {
-    int i,j;
+    int i,j,k,count = 0;
 
     for(i = 0;i < x;i++)
     {
-        for(j = 0;j < y;j++)
+        printf("   ");
+        if(i == 0)
         {
-            if(checkBoard[i][j] =)
+            for(k = 0;k < y;k++)
             {
-                
+                printf("%2d ", k + 1);
+            }
+            printf("\n");
+            for(k = 0;k < y * 2 + (y * 2);k++)
+            {
+                printf("-");
             }
         }
+
+        printf("\n");
+
+        for(j = 0;j < y;j++)
+        {
+           if(j == 0)
+           {
+               printf("%d | ", i + 1);
+           }
+           if(checkBoard[i][j]==0)
+           {
+               printf("#  ");
+           }
+           else
+           {
+               printf("%c ",board[i][j]);
+           }
+        }
+        count++;
+        printf("\n");
     }
 }

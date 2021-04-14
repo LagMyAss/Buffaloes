@@ -62,8 +62,17 @@ int main()
     fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board);
     fBells(x, y, board);
+    printBoard(x, y, board, checkBoard);
 
-    
+    /* Print table test
+    for(i = 0; i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }*/
 
     // free memory
     for(i = 0; i < y; i++)
