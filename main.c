@@ -102,7 +102,7 @@ int main()
     
     if(prefix[0] == 's')
     {
-        ux = ((int) prefix[2]) - '/';
+        ux = ((int) prefix[2]) - '/'; // / because we need one number before 0, so 1 in input will be 0 for the table
         uy = ((int) prefix[4]) - '/';
         cShow(ux,uy,checkBoard);
         if(board[ux][uy] == '@')
