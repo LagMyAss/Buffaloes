@@ -10,7 +10,7 @@ int main()
 {
     srand(time(NULL));
     int x, y, dif, i, j, active = 1, level = 1, countb, ux, uy;
-    char prefix[100];
+    char prefix[8];
     float a;
 
     printf("\n************************************");
@@ -69,50 +69,63 @@ int main()
     fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
-    printBoard(x, y, board, checkBoard);
-
-    printf("\nLevel : %d", level);
-    printf("\nDifficulty : ");
-    switch(dif)
+    while(active)
     {
-        case 1:
+        printBoard(x, y, board, checkBoard);
+        printf("\nLevel : %d", level);
+        printf("\nDifficulty : ");
+        switch(dif)
         {
-            printf("Easy");
-            break;
+            case 1:
+            {
+                printf("Easy");
+                break;
+            }
+            case 2:
+            {
+                printf("Medium");
+                break;
+            }
+            case 3:
+            {
+                printf("Hard");
+                break;
+            }
+            case 4:
+            {
+                printf("Impossible");
+                break;
+            }
         }
-        case 2:
+        printf("\nUncovered buffaloes : %d", countb);
+        printf("\nMake your move : ");
+        scanf(" %[^\n]s", prefix); // prefix [0] == cmd, prefix[2] == x, prefix[4] == y
+        
+        if(prefix[0] == 's' || prefix[0] == 'S')
         {
-            printf("Medium");
-            break;
+            calcXY(&ux,&uy,prefix);
+            if(checkBoard[ux][uy] == 0)
+            {
+                cShow(ux,uy,board,checkBoard,&active);
+            }
+            else
+            {
+                printf("\n%d,%d is already opened", ux,uy);
+            }
         }
-        case 3:
+        else if(prefix[0] == 'b' || prefix[0] == 'B')
         {
-            printf("Hard");
-            break;
+            cMark(ux,uy,checkBoard);
         }
-        case 4:
+        else if(prefix[0] == 'x' || prefix[0] == 'X')
         {
-            printf("Impossible");
-            break;
+            cExit(&active);
+        }
+        else
+        {
+            printf("There isn't a command starting with '%c'", prefix[0]);
         }
     }
-    printf("\nUncovered buffaloes : %d", countb);
-    printf("\nMake your move : ");
-    scanf(" %[^\n]s", prefix); // prefix [0] == cmd, prefix[2] == x, prefix[4] == y
-    
-    if(prefix[0] == 's')
-    {
-        ux = ((int) prefix[2]) - '/'; // / because we need one number before 0, so 1 in input will be 0 for the table
-        uy = ((int) prefix[4]) - '/';
-        cShow(ux,uy,checkBoard);
-        if(board[ux][uy] == '@')
-        {
-            active = 0;
-            printBoard(x, y, board, checkBoard);
-            printf("\nYou're Dead! \nA buffalo jumped on your head! G4M3 0V3R!");
-        }
-    }
-
 
 
     /* For test, printing tables elements

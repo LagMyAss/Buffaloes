@@ -125,19 +125,46 @@ void printBoard(int x, int y, char **board, int **checkBoard)
            {
                printf("#  ");
            }
+           else if(checkBoard[i][j] == 1)
+           {
+                printf("%c  ",board[i][j]);
+           }
            else
            {
-               if(board[i][j] == '@')
-               {
-                   printf("*  ");
-               }
-               else
-               {
-                   printf("%c  ",board[i][j]);
-               }
+               printf("*  ");
            }
         }
         count++;
         printf("\n");
     }
+}
+
+void calcXY(int *x, int *y,char *prefix)
+{
+    if(prefix[3] == ',')
+    {
+        *x = ((int)prefix[2] - '0');
+        if(prefix[5] == '\0')
+        {
+            *y = ((int)prefix[4] - '0');
+        }
+        else if(prefix[6] == '\0')
+        {
+            *y = (((int)prefix[4] - '0') * 10) + ((int)prefix[5] - '0');
+        }
+    }
+    else if(prefix[4] == ',')
+    {
+        *x = (((int)prefix[2] - '0') * 10) + ((int)prefix[3] - '0');
+        if(prefix[6] == '\0')
+        {
+            *y = ((int)prefix[5] - '0');
+        }
+        else if(prefix[7] == '\0')
+        {
+            *y = (((int)prefix[5] - '0') * 10) + ((int)prefix[6] - '0');
+        }
+    }
+    (*x)--;
+    (*y)--;
 }
