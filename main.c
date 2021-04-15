@@ -2,16 +2,22 @@
 #include <stdlib.h>
 #include <time.h>
 #include "func.h"
+#include "commands.h"
 
 #define minxy 4
 
 int main()
 {
     srand(time(NULL));
-    int x, y, dif, i, j;
+    int x, y, dif, i, j, active = 1;
     float a;
 
-    printf("The game starts :");
+    printf("\n************************************");
+    printf("\n*      Welcome to Buffalo Game     *");
+    printf("\n*      a minesweeper like game     *");
+    printf("\n*      Good luck and Have Fun!     *");
+    printf("\n************************************");
+    printf("\n\nThe game starts :");
     printf("\nPlease enter the dimensions of the table you want to play BUT ( x, y > %d )..", minxy);
 
     do
@@ -58,13 +64,16 @@ int main()
         printf("Error! memory not allocated.");
         exit(0);
     }
+    
+    while(active)
+    {
+        fStart(x, y, board, checkBoard);
+        fBuffalo(x, y, dif, board);
+        fBells(x, y, board);
+        printBoard(x, y, board, checkBoard);
+    }
 
-    fStart(x, y, board, checkBoard);
-    fBuffalo(x, y, dif, board);
-    fBells(x, y, board);
-    printBoard(x, y, board, checkBoard);
-
-    printf("\n");
+    /* For test, printing tables elements
     for(i = 0; i < x;i++)
     {
         for(j = 0;j < y;j++)
@@ -72,7 +81,7 @@ int main()
             printf("%c ", board[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
     // free memory
     for(i = 0; i < y; i++)

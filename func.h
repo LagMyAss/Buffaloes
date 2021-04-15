@@ -96,7 +96,7 @@ void printBoard(int x, int y, char **board, int **checkBoard)
     int i,j,k,count = 0;
 
     printf("    ");
-    
+
     for(i = 0;i < x;i++)
     {
         if(i == 0)
