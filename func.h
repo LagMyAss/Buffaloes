@@ -16,7 +16,7 @@ void fStart(int x, int y, char **board, int **checkBoard) // initializing every 
     }
 }
 
-void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
+void fBuffalo(int x, int y, int dif, char **board, int *countb) // initializing buffaloes
 {
     int i, k, l;
     float chanceBuff, nBuffaloes;
@@ -44,9 +44,10 @@ void fBuffalo(int x, int y, int dif, char **board) // initializing buffaloes
         }
     }
     nBuffaloes = (x * y) * chanceBuff; // Getting buffalo crowd
+    *countb = (int) nBuffaloes;
 
     // Putting buffaloes in random elements of the table
-    for(i = 0;i < (int) nBuffaloes;i++)
+    for(i = 0;i < *countb;i++)
     {
         do
         {
@@ -95,7 +96,7 @@ void printBoard(int x, int y, char **board, int **checkBoard)
 {
     int i,j,k,count = 0;
 
-    printf("    ");
+    printf("\n    ");
 
     for(i = 0;i < x;i++)
     {
@@ -120,13 +121,20 @@ void printBoard(int x, int y, char **board, int **checkBoard)
            {
                printf("%2d | ", i + 1);
            }
-           if(checkBoard[i][j]== 0)
+           if(checkBoard[i][j] == 0)
            {
                printf("#  ");
            }
            else
            {
-               printf("%2c ",board[i][j]);
+               if(board[i][j] == '@')
+               {
+                   printf("*  ");
+               }
+               else
+               {
+                   printf("%c  ",board[i][j]);
+               }
            }
         }
         count++;

@@ -9,7 +9,8 @@
 int main()
 {
     srand(time(NULL));
-    int x, y, dif, i, j, active = 1;
+    int x, y, dif, i, j, active = 1, level = 1, countb, ux, uy;
+    char prefix[100];
     float a;
 
     printf("\n************************************");
@@ -17,7 +18,7 @@ int main()
     printf("\n*      a minesweeper like game     *");
     printf("\n*      Good luck and Have Fun!     *");
     printf("\n************************************");
-    printf("\n\nThe game starts :");
+    printf("\n\nThe game starts :\n");
     printf("\nPlease enter the dimensions of the table you want to play BUT ( x, y > %d )..", minxy);
 
     do
@@ -32,7 +33,7 @@ int main()
 
     do
     {
-        printf("\ny = ");
+        printf("y = ");
         scanf("%d", &y);
         if(y < minxy)
         {
@@ -41,7 +42,7 @@ int main()
     }while(y < minxy);
 
     printf("\nGreat! The table will be %dx%d !\n", x, y);
-    printf("\nNow Enter the number of the difficulty : ");
+    printf("\nNow Enter the number of the difficulty you want to play : ");
     printf("\n1) Easy\n2) Medium\n3) Hard\n4) Impossible\nDifficulty : ");
     scanf("%d", &dif);
 
@@ -65,13 +66,54 @@ int main()
         exit(0);
     }
     
-    while(active)
+    fStart(x, y, board, checkBoard);
+    fBuffalo(x, y, dif, board, &countb);
+    fBells(x, y, board);
+    printBoard(x, y, board, checkBoard);
+
+    printf("\nLevel : %d", level);
+    printf("\nDifficulty : ");
+    switch(dif)
     {
-        fStart(x, y, board, checkBoard);
-        fBuffalo(x, y, dif, board);
-        fBells(x, y, board);
-        printBoard(x, y, board, checkBoard);
+        case 1:
+        {
+            printf("Easy");
+            break;
+        }
+        case 2:
+        {
+            printf("Medium");
+            break;
+        }
+        case 3:
+        {
+            printf("Hard");
+            break;
+        }
+        case 4:
+        {
+            printf("Impossible");
+            break;
+        }
     }
+    printf("\nUncovered buffaloes : %d", countb);
+    printf("\nMake your move : ");
+    scanf(" %[^\n]s", prefix); // prefix [0] == cmd, prefix[2] == x, prefix[4] == y
+    
+    if(prefix[0] == 's')
+    {
+        ux = ((int) prefix[2]) - '/';
+        uy = ((int) prefix[4]) - '/';
+        cShow(ux,uy,checkBoard);
+        if(board[ux][uy] == '@')
+        {
+            active = 0;
+            printBoard(x, y, board, checkBoard);
+            printf("\nYou're Dead! \nA buffalo jumped on your head! G4M3 0V3R!");
+        }
+    }
+
+
 
     /* For test, printing tables elements
     for(i = 0; i < x;i++)

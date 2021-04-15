@@ -1,26 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void checkCommand(char command, int x, int y)
+
+void cShow(int x, int y, int **checkBoard)
 {
-    if(command == 's') // show command
-    {
+    checkBoard[x][y] = 1;
+}
 
-    }
-    else if(command == 'b') // mark buffallo command
-    {
+void cMark(int x, int y)
+{
 
-    }
-    else if(command == 'x') // exit command
-    {
+}
 
-    }
-    else if(command == 'h') // help command
-    {
+void cExit(int *active)
+{
+    *active = 0;
+}
 
-    }
-    else if(command == 'w') // wisdom command
-    {
+void cHelp()
+{
+    
+}
 
-    }
+void cWisdom()
+{
+
 }
