@@ -115,6 +115,7 @@ int main()
         }
         else if(prefix[0] == 'b' || prefix[0] == 'B')
         {
+            calcXY(&ux,&uy,prefix);
             cMark(ux,uy,checkBoard);
         }
         else if(prefix[0] == 'x' || prefix[0] == 'X')
