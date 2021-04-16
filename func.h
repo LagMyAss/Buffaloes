@@ -139,7 +139,7 @@ void printBoard(int x, int y, char **board, int **checkBoard)
     }
 }
 
-void calcXY(int *x, int *y,char *prefix)
+void calcXY(int *x, int *y,char *prefix) // getting prefix values for xy and converts them to int
 {
     if(prefix[3] == ',')
     {
