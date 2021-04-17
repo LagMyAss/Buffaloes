@@ -53,6 +53,12 @@ int main()
     board = (char **) malloc (x * sizeof(char *));
     checkBoard = (int **) malloc (x * sizeof(int *));
 
+    for(i = 0; i < x; i++)
+    {
+        board[i] = (char *) malloc (y * sizeof(char));
+        checkBoard[i] = (int *) malloc (y * sizeof(int));
+    }
+
     // if memory cannot be allocated
     if(board == NULL || checkBoard == NULL)                     
     {
@@ -63,15 +69,6 @@ int main()
     fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
-
-    for(i = 0; i < x;i++)
-    {
-        for(j = 0;j < y;j++)
-        {
-            printf("%c ", board[i][j]);
-        }
-        printf("\n");
-    }
 
     while(active)
     {
