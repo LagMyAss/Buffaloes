@@ -13,7 +13,14 @@ void cShow(int x, int y, char **board, int **checkBoard, int *active)
 
 void cMark(int x, int y, int **checkBoard)
 {
-    checkBoard[x][y] = 2;
+    if(checkBoard[x][y] == 0)
+    {
+        checkBoard[x][y] = 2;
+    }
+    else
+    {
+        printf("\n%d,%d is already opened or marked. Try other coordinates.\n", x,y);
+    }
 }
 
 void cExit(int *active)

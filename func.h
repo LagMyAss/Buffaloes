@@ -165,6 +165,39 @@ void calcXY(int *x, int *y,char *prefix) // getting prefix values for xy and con
             *y = (((int)prefix[5] - '0') * 10) + ((int)prefix[6] - '0');
         }
     }
+    else
+    {
+        printf("\nSyntax error, please follow --> ( prefix x,y ) or ( prefix )");
+    }
     (*x)--;
     (*y)--;
+}
+
+int checkWin(int x, int y, char **board, int **checkBoard) // if opened == all - buffalos then player wins
+{
+    int i,j,count = 0,countb = 0;
+
+
+    for(i = 0;i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            if(board[i][j] == '@')
+            {
+                countb++;
+            }
+            if(checkBoard[i][j] == 1)
+            {
+                count++;
+            }
+        }
+    }
+    if(count == (x * y - countb))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

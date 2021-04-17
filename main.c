@@ -9,7 +9,7 @@
 int main()
 {
     srand(time(NULL));
-    int x, y, dif, i, j, active = 1, level = 1, countb, ux, uy;
+    int x, y, dif, i, j, active = 1, level = 1, countb, countmarked = 0, buffnumber, ux, uy, win = 0,firstbuff = 0;
     char prefix[8];
     float a;
 
@@ -53,12 +53,6 @@ int main()
     board = (char **) malloc (x * sizeof(char *));
     checkBoard = (int **) malloc (x * sizeof(int *));
 
-    for(i = 0; i < x; i++)
-    {
-        board[i] = (char *) malloc (y * sizeof(char));
-        checkBoard[i] = (int *) malloc (y * sizeof(int));
-    }
-
     // if memory cannot be allocated
     if(board == NULL || checkBoard == NULL)                     
     {
@@ -69,8 +63,20 @@ int main()
     fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
+
+    for(i = 0; i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+
     while(active)
     {
+        buffnumber = countb - countmarked; // buff number on print
+
         printBoard(x, y, board, checkBoard);
         printf("\nLevel : %d", level);
         printf("\nDifficulty : ");
@@ -97,26 +103,41 @@ int main()
                 break;
             }
         }
-        printf("\nUncovered buffaloes : %d", countb);
+        printf("\nUncovered buffaloes : %d", buffnumber);
         printf("\nMake your move : ");
         scanf(" %[^\n]s", prefix); // prefix [0] == cmd, prefix[2] == x, prefix[4] == y
         
         if(prefix[0] == 's' || prefix[0] == 'S')
         {
             calcXY(&ux,&uy,prefix);
+            if(board[ux][uy] == '@' && firstbuff == 0)
+            {
+                firstbuff++;
+            }
+            while(board[ux][uy] == '@' && firstbuff == 1) // check if first is buffalo
+            {
+                fStart(x, y, board, checkBoard);
+                fBuffalo(x, y, dif, board, &countb);
+                fBells(x, y, board);
+            }
             if(checkBoard[ux][uy] == 0)
             {
                 cShow(ux,uy,board,checkBoard,&active);
+                if(firstbuff < 2)
+                {
+                    firstbuff++;
+                }
             }
             else
             {
-                printf("\n%d,%d is already opened", ux,uy);
+                printf("\n%d,%d is already opened", ux+1,uy+1);
             }
         }
         else if(prefix[0] == 'b' || prefix[0] == 'B')
         {
             calcXY(&ux,&uy,prefix);
             cMark(ux,uy,checkBoard);
+            countmarked++;
         }
         else if(prefix[0] == 'x' || prefix[0] == 'X')
         {
@@ -125,6 +146,41 @@ int main()
         else
         {
             printf("There isn't a command starting with '%c'", prefix[0]);
+        }
+
+        win = checkWin(x, y, board, checkBoard);
+        if(win == 1)
+        {
+            if(x < minxy && y < minxy)
+            {
+                printf("\n\n\nCongratulations!! You passed the level! Are you ready for a harder one?");
+                level++;
+                x++;
+                y++;
+                // not working
+                /*board = (char **) realloc(board, x * sizeof(char *));
+                checkBoard = (int **) realloc(checkBoard, x * sizeof(int *));
+                for(i = 0;i < x;i++)
+                {
+                    board[i] = (char *) realloc(board, y * sizeof(char));
+                    checkBoard[i] = (int *) realloc(checkBoard, y * sizeof(int));
+                }
+
+                if(board == NULL || checkBoard == NULL)                     
+                {
+                    printf("Error! memory not allocated.");
+                    exit(0);
+                }*/
+
+                fStart(x, y, board, checkBoard);
+                fBuffalo(x, y, dif, board, &countb);
+                fBells(x, y, board);
+            }
+            else
+            {
+                active = 0;
+                printf("\n\n\nGame over! you finished the max level.");
+            }
         }
     }
 
