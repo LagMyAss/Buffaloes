@@ -3,11 +3,14 @@
 
 void cShow(int x, int y, char **board, int **checkBoard, int *active)
 {
-    checkBoard[x][y] = 1;
     if(board[x][y] == '@')
     {
         *active = 0;
         printf("\nYou're Dead! \nA buffalo jumped on your head! G4M3 0V3R!");
+    }
+    else
+    {
+        checkBoard[x][y] = 1;
     }
 }
 
