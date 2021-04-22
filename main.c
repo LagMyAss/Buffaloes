@@ -5,6 +5,7 @@
 #include "commands.h"
 
 #define minxy 4
+#define maxlevel 10
 
 int main()
 {
@@ -69,6 +70,15 @@ int main()
     fStart(x, y, board, checkBoard);
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
+
+    for(i = 0; i < x;i++)
+    {
+        for(j = 0;j < y;j++)
+        {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
 
     while(active)
     {
@@ -148,27 +158,28 @@ int main()
         win = checkWin(x, y, board, checkBoard);
         if(win == 1)
         {
-            if(x < minxy && y < minxy)
+            if(x < maxlevel && y < maxlevel)
             {
                 printf("\n\n\nCongratulations!! You passed the level! Are you ready for a harder one?");
+                
                 level++;
                 x++;
                 y++;
-                // not working
-                /*board = (char **) realloc(board, x * sizeof(char *));
-                checkBoard = (int **) realloc(checkBoard, x * sizeof(int *));
+
+                board = realloc(board, x * sizeof(char *));
+                checkBoard = realloc(checkBoard, x * sizeof(int *));
                 for(i = 0;i < x;i++)
                 {
-                    board[i] = (char *) realloc(board, y * sizeof(char));
-                    checkBoard[i] = (int *) realloc(checkBoard, y * sizeof(int));
+                    board[i] = realloc(board[i], y * sizeof(char));
+                    checkBoard[i] = realloc(checkBoard[i], y * sizeof(int));
                 }
 
                 if(board == NULL || checkBoard == NULL)                     
                 {
                     printf("Error! memory not allocated.");
                     exit(0);
-                }*/
-
+                }
+            
                 fStart(x, y, board, checkBoard);
                 fBuffalo(x, y, dif, board, &countb);
                 fBells(x, y, board);
