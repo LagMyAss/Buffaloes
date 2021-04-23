@@ -5,12 +5,11 @@
 #include "commands.h"
 
 #define minxy 4
-#define maxlevel 10
 
 int main()
 {
     srand(time(NULL));
-    int x, y, dif, i, j, active = 1, level = 1, countb, countmarked = 0, buffnumber, ux, uy, win = 0,firstbuff = 0;
+    int x, y, dif, i, j, active = 1, level = 1, countb, countmarked = 0, buffnumber, ux, uy, win = 0,firstbuff = 0, hx = -1,hy = -1;
     char prefix[8];
     float a;
 
@@ -42,9 +41,12 @@ int main()
         }
     }while(y < minxy);
 
-    printf("\nGreat! The table will be %dx%d !\n", x, y);
+    int maxlevelx = x + 3, maxlevely = y + 3;
+
+    printf("\nGreat! The table will be %dx%d ! There are 3 levels, are you good enough to pass?\n", x, y);
+    printf("To get the available commands please type 'c'\n");
     printf("\nNow Enter the number of the difficulty you want to play : ");
-    printf("\n1) Easy\n2) Medium\n3) Hard\n4) Impossible\nDifficulty : ");
+    printf("\n1) Beginner\n2) Intermediate\n3) Expert\n4) Professional\nDifficulty : ");
     scanf("%d", &dif);
 
     char **board;
@@ -71,14 +73,14 @@ int main()
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
 
-    for(i = 0; i < x;i++)
+    /*for(i = 0; i < x;i++)
     {
         for(j = 0;j < y;j++)
         {
             printf("%c ", board[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
     while(active)
     {
@@ -91,26 +93,32 @@ int main()
         {
             case 1:
             {
-                printf("Easy");
+                printf("Beginner");
                 break;
             }
             case 2:
             {
-                printf("Medium");
+                printf("Intermediate");
                 break;
             }
             case 3:
             {
-                printf("Hard");
+                printf("Expert");
                 break;
             }
             case 4:
             {
-                printf("Impossible");
+                printf("Professional");
                 break;
             }
         }
         printf("\nUncovered buffaloes : %d", buffnumber);
+        if(hx != -1 && hy != -1)
+        {
+            printf("\nTry to stand at %d,%d", hx, hy);
+            hx = -1;
+            hy = -1;
+        }
         printf("\nMake your move : ");
         scanf(" %[^\n]s", prefix); // prefix [0] == cmd, prefix[2] == x, prefix[4] == y
         
@@ -150,28 +158,49 @@ int main()
         {
             cExit(&active);
         }
+        else if(prefix[0] == 'h' || prefix[0] == 'H')
+        {
+            cHelp(x,y,&hx,&hy,board,checkBoard);
+        }
+        else if(prefix[0] == 'w' || prefix[0] == 'W')
+        {
+            printf("\nWisdom");
+        }
+        else if(prefix[0] == 'c' || prefix[0] == 'C')
+        {
+            printf("\nAvailable commands : \n1) 's' to open coordinates\n2) 'b' to mark buffaloes\n3) 'x' to exit the game\n4) 'h' to get coordinates without buffalo\n5) 'w' to get the BEST coordinates");
+        }
         else
         {
-            printf("There isn't a command starting with '%c'", prefix[0]);
+            printf("\n\nThere isn't a command starting with '%c'\n\n", prefix[0]);
         }
 
         win = checkWin(x, y, board, checkBoard);
         if(win == 1)
         {
-            if(x < maxlevel && y < maxlevel)
+            if(x < maxlevelx && y < maxlevely)
             {
                 printf("\n\n\nCongratulations!! You passed the level! Are you ready for a harder one?");
-                
+
+                for(i = 0; i < x; i++)
+                {
+                    free(board[i]);
+                    free(checkBoard[i]);
+                }
+                free(board);
+                free(checkBoard);
+
                 level++;
                 x++;
                 y++;
+                
+                board = (char **) malloc (x * sizeof(char *));
+                checkBoard = (int **) malloc (x * sizeof(int *));
 
-                board = realloc(board, x * sizeof(char *));
-                checkBoard = realloc(checkBoard, x * sizeof(int *));
-                for(i = 0;i < x;i++)
+                for(i = 0; i < x; i++)
                 {
-                    board[i] = realloc(board[i], y * sizeof(char));
-                    checkBoard[i] = realloc(checkBoard[i], y * sizeof(int));
+                    board[i] = (char *) malloc (y * sizeof(char));
+                    checkBoard[i] = (int *) malloc (y * sizeof(int));
                 }
 
                 if(board == NULL || checkBoard == NULL)                     
@@ -204,11 +233,13 @@ int main()
     }*/
 
     // free memory
-    for(i = 0; i < y; i++)
+    for(i = 0; i < x; i++)
     {
         free(board[i]);
+        free(checkBoard[i]);
     }
     free(board);
+    free(checkBoard);
 
     return 0;
 }

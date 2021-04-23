@@ -83,9 +83,9 @@ void fBells(int x, int y, char **board)
                     }
                 }
                 board[i][j] += count;
-                if(board[i][j]=='0')
+                if(board[i][j] == '0')
                 {
-                    board[i][j]='.';
+                    board[i][j] = '.';
                 }
             }
         }
@@ -197,6 +197,14 @@ int checkWin(int x, int y, char **board, int **checkBoard) // if opened == all -
         return 1;
     }
     else
+    {
+        return 0;
+    }
+}
+
+int find(int x, int y, int xmax, int ymax)
+{
+    if(x >= xmax || y >= ymax)
     {
         return 0;
     }

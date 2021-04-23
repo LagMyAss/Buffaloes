@@ -29,15 +29,21 @@ void cMark(int x, int y, int **checkBoard)
 void cExit(int *active)
 {
     *active = 0;
-    printf("\nEnding the game..");
+    printf("\nEnding the game.. Better luck next time :(");
 }
 
-void cHelp()
+void cHelp(int x, int y, int *hx, int *hy, char **board, int **checkBoard)
 {
-    
+    do
+    {
+        *hx = rand() % x;
+        *hy = rand() % y;
+    }while(board[*hx][*hy] == '@' || checkBoard[*hx][*hy] != 0);
+    (*hx)++;
+    (*hy)++;
 }
 
 void cWisdom()
 {
-
+    
 }
