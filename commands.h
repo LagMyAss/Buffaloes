@@ -43,7 +43,20 @@ void cHelp(int x, int y, int *hx, int *hy, char **board, int **checkBoard)
     (*hy)++;
 }
 
-void cWisdom()
+void cWisdom(int mx, int my, char **board, int **checkBoard, int *rx, int *ry)
 {
-    
+    int i, j;
+
+    for(i = 0;i < mx;i++)
+    {
+        for(j = 0;j < my;j++)
+        {
+            if(board[i][j] == '.')
+            {
+                *rx = i + 1;
+                *ry = j + 1;
+                break;
+            } 
+        }
+    }
 }

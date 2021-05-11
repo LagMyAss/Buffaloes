@@ -58,7 +58,7 @@ void fBuffalo(int x, int y, int dif, char **board, int *countb) // initializing 
     }
 }
 
-void fBells(int x, int y, char **board)
+void fBells(int x, int y, char **board) // putting bells on the board
 {
     int i,j,count,k,l;
 
@@ -92,7 +92,7 @@ void fBells(int x, int y, char **board)
     }
 }
 
-void printBoard(int x, int y, char **board, int **checkBoard)
+void printBoard(int x, int y, char **board, int **checkBoard) // prints the board
 {
     int i,j,k,count = 0;
 
@@ -202,10 +202,31 @@ int checkWin(int x, int y, char **board, int **checkBoard) // if opened == all -
     }
 }
 
-int find(int x, int y, int xmax, int ymax)
+void floodFill(int x, int y,int mx, int my, char **board, int **checkBoard)
 {
-    if(x >= xmax || y >= ymax)
+    if(x < 0 || x >= mx || y < 0 || y >= my)
     {
-        return 0;
+        return;
     }
+    if(checkBoard[x][y] == 1 || checkBoard[x][y] == 2)
+    {
+        return;
+    }
+
+    checkBoard[x][y] = 1;
+
+    if(board[x][y] == '.')
+    {
+        checkBoard[x][y] = 1;
+
+        floodFill(x + 1, y, mx, my, board, checkBoard);
+        floodFill(x + 1, y + 1, mx, my, board, checkBoard);
+        floodFill(x + 1, y - 1, mx, my, board, checkBoard);
+        floodFill(x - 1, y + 1, mx, my, board, checkBoard);
+        floodFill(x - 1, y - 1, mx, my, board, checkBoard);
+        floodFill(x - 1, y, mx, my, board, checkBoard);
+        floodFill(x, y + 1, mx, my, board, checkBoard);
+        floodFill(x, y - 1, mx, my, board, checkBoard);
+    }
+    
 }

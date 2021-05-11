@@ -1,3 +1,12 @@
+/* Meletis Gkikas Peppas
+AM: 2022202000046
+dit20046@go.uop.gr
+
+Alexandros Kyriazis
+AM: 2022202000110
+dit20110@go.uop.gr
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -9,7 +18,7 @@
 int main()
 {
     srand(time(NULL));
-    int x, y, dif, i, j, active = 1, level = 1, countb, countmarked = 0, buffnumber, ux, uy, win = 0,firstbuff = 0, hx = -1,hy = -1;
+    int x, y, dif, i, j, active = 1, level = 1, countb, countmarked = 0, buffnumber, ux, uy, rx, ry, win = 0,firstbuff = 0, hx = -1,hy = -1, isWis = 0;
     char prefix[8];
     float a;
 
@@ -73,14 +82,14 @@ int main()
     fBuffalo(x, y, dif, board, &countb);
     fBells(x, y, board);
 
-    /*for(i = 0; i < x;i++)
+    for(i = 0; i < x;i++)
     {
         for(j = 0;j < y;j++)
         {
             printf("%c ", board[i][j]);
         }
         printf("\n");
-    }*/
+    }
 
     while(active)
     {
@@ -113,6 +122,11 @@ int main()
             }
         }
         printf("\nUncovered buffaloes : %d", buffnumber);
+        if(isWis == 1)
+        {
+            printf("\nThe best place to stand is %d, %d", rx, ry);
+            isWis = 0;
+        }
         if(hx != -1 && hy != -1)
         {
             printf("\nTry to stand at %d,%d", hx, hy);
@@ -137,10 +151,21 @@ int main()
             }
             if(checkBoard[ux][uy] == 0)
             {
-                cShow(ux,uy,board,checkBoard,&active);
+                if(board[ux][uy] == '.')
+                {
+                    floodFill(ux,uy,x,y,board,checkBoard);
+                }
+                else
+                {
+                    cShow(ux,uy,board,checkBoard,&active);
+                }
                 if(firstbuff < 2)
                 {
                     firstbuff++;
+                }
+                else
+                {
+                    firstbuff = 0;
                 }
             }
             else
@@ -164,7 +189,8 @@ int main()
         }
         else if(prefix[0] == 'w' || prefix[0] == 'W')
         {
-            printf("\nWisdom");
+            cWisdom(x, y, board, checkBoard, &rx, &ry);
+            isWis = 1;
         }
         else if(prefix[0] == 'c' || prefix[0] == 'C')
         {
@@ -176,6 +202,7 @@ int main()
         }
 
         win = checkWin(x, y, board, checkBoard);
+
         if(win == 1)
         {
             if(x < maxlevelx && y < maxlevely)
