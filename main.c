@@ -1,12 +1,3 @@
-/* Meletis Gkikas Peppas
-AM: 2022202000046
-dit20046@go.uop.gr
-
-Alexandros Kyriazis
-AM: 2022202000110
-dit20110@go.uop.gr
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
