@@ -3,7 +3,6 @@
 #include <time.h>
 #include "func.h"
 #include "commands.h"
-
 #define minxy 4
 
 int main()
